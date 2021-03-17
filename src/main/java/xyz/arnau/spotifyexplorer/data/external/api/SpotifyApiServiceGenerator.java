@@ -16,19 +16,23 @@ public class SpotifyApiServiceGenerator {
         this.apiConfiguration = apiConfiguration;
     }
 
-    private Retrofit createRetrofit() {
+    private Retrofit createRetrofit(String baseUrl) {
         var gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
         return new Retrofit.Builder()
-                .baseUrl(apiConfiguration.getApiUrl())
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(new OkHttpClient.Builder().build())
                 .build();
     }
 
-    public <S> S createService(Class<S> serviceClass) {
-        return createRetrofit().create(serviceClass);
+    public SpotifyApiService createApiService() {
+        return createRetrofit(apiConfiguration.getApiUrl()).create(SpotifyApiService.class);
+    }
+
+    public SpotifyAccountApiService createAccountApiService() {
+        return createRetrofit(apiConfiguration.getAccountsApiUrl()).create(SpotifyAccountApiService.class);
     }
 }

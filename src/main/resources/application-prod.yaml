@@ -1,0 +1,5 @@
+base-url: ${BASE_URL}
+spotify:
+  credentials:
+    client-id: ${SPOTIFY_CLIENT_ID}
+    client-secret: ${SPOTIFY_CLIENT_SECRET}
