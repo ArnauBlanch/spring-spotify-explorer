@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+spotify:
+  api-url: https://accounts.spotify.com
+  user-permission-url: ${spotify.api-url}/authorize
+  scopes: user-read-private user-read-email
+  callbackUrl: ${base-url}/auth/callback
