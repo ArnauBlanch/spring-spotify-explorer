@@ -10,6 +10,8 @@ public class SpotifyApiConfiguration {
     private SpotifyCredentials credentials;
     private String userPermissionUrl;
     private String apiUrl;
+    private String accountsApiUrl;
+
     private String callbackUrl;
 
     private String scopes;
@@ -52,5 +54,13 @@ public class SpotifyApiConfiguration {
 
     public void setCallbackUrl(String callbackUrl) {
         this.callbackUrl = callbackUrl;
+    }
+
+    public String getAccountsApiUrl() {
+        return accountsApiUrl;
+    }
+
+    public void setAccountsApiUrl(String accountsApiUrl) {
+        this.accountsApiUrl = accountsApiUrl;
     }
 }

@@ -7,7 +7,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import xyz.arnau.spotifyexplorer.data.external.model.ApiToken;
 
-public interface SpotifyAuthApiService {
+public interface SpotifyAccountApiService {
     @FormUrlEncoded
     @POST("/api/token")
     Call<ApiToken> getToken(@Field("grant_type") String grantType, @Field("code") String code,
