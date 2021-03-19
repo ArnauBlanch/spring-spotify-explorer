@@ -6,6 +6,8 @@ spring:
       client:
         registration:
           spotify:
+            client-id: ${spotify.client-id}
+            client-secret: ${spotify.client-secret}
             authorization-grant-type: authorization_code
             scope: user-read-private, user-read-email
             redirect-uri: ${base-url}/login/oauth2/code/spotify
