@@ -1,6 +1,23 @@
 spring:
   profiles:
     active: dev
+  security:
+    oauth2:
+      client:
+        registration:
+          spotify:
+            authorization-grant-type: authorization_code
+            scope: user-read-private, user-read-email
+            redirect-uri: ${base-url}/login/oauth2/code/spotify
+            provider-id: spotify
+        provider:
+          spotify:
+            provider-id: spotify
+            authorization-uri: https://accounts.spotify.com/authorize
+            token-uri: https://accounts.spotify.com/api/token
+            user-info-uri: https://api.spotify.com/v1/me
+            user-name-attribute: id
+
 server:
   servlet:
     encoding:
@@ -8,7 +25,3 @@ server:
       force: true
 spotify:
   api-url: https://api.spotify.com
-  accounts-api-url: https://accounts.spotify.com
-  user-permission-url: ${spotify.accounts-api-url}/authorize
-  scopes: user-read-private user-read-email
-  callbackUrl: ${base-url}/auth/callback
