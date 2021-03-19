@@ -1,5 +1,7 @@
 package xyz.arnau.spotifyexplorer.api.controllers;
 
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +17,7 @@ public class MeController {
     }
 
     @GetMapping("/me")
-    public SpotifyUser getCurrentUserProfile(@CookieValue("spotify-token")String spotifyToken) {
-        return this.spotifyService.getCurrentUserProfile(spotifyToken);
+    public SpotifyUser getCurrentUserProfile(@RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient) {
+        return this.spotifyService.getCurrentUserProfile(authorizedClient.getAccessToken().getTokenValue());
     }
 }

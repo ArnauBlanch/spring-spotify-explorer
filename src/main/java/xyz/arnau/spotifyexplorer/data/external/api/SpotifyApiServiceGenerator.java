@@ -31,8 +31,4 @@ public class SpotifyApiServiceGenerator {
     public SpotifyApiService createApiService() {
         return createRetrofit(apiConfiguration.getApiUrl()).create(SpotifyApiService.class);
     }
-
-    public SpotifyAccountApiService createAccountApiService() {
-        return createRetrofit(apiConfiguration.getAccountsApiUrl()).create(SpotifyAccountApiService.class);
-    }
 }
