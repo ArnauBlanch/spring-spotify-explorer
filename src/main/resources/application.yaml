@@ -1,7 +1,6 @@
-spring:
+pring:
   profiles:
     active: dev
-
 
 server:
   servlet:
