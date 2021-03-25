@@ -8,8 +8,8 @@ import xyz.arnau.spotifyexplorer.domain.TrackRepository;
 
 @Configuration
 public class SpotifyExplorerConfig {
-    @Bean
-    public SaveTrack saveTrack(TrackRepository trackRepository, PlayListRepository playListRepository) {
-        return new SaveTrack(trackRepository, playListRepository);
-    }
+//    @Bean
+//    public SaveTrack saveTrack(TrackRepository trackRepository, PlayListRepository playListRepository) {
+//        return new SaveTrack(trackRepository, playListRepository);
+//    }
 }

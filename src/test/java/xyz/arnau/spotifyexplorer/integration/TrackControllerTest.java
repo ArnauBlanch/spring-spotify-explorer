@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -34,9 +33,11 @@ public class TrackControllerTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(new JSONObject().put("name", "test name").toString())
+                .port(port)
         .when()
                 .post("/track")
         .then()
-                .statusCode(HttpStatus.CREATED.value());
+                .statusCode(HttpStatus.CREATED.value())
+        ;
     }
 }

@@ -11,19 +11,19 @@ import xyz.arnau.spotifyexplorer.domain.TrackNotFoundException;
 @RestController
 public class TrackController {
 
-    private SaveTrack saveTrack;
-
-    public TrackController(SaveTrack saveTrack) {
-        this.saveTrack = saveTrack;
-    }
+//    private SaveTrack saveTrack;
+//
+//    public TrackController(SaveTrack saveTrack) {
+//        this.saveTrack = saveTrack;
+//    }
 
     @PostMapping("/track")
     public ResponseEntity<?> saveTrack(@RequestBody String name) {
-        try {
-            saveTrack.execute(name);
+//        try {
+//            saveTrack.execute(name);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (TrackNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+//        } catch (TrackNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
     }
 }

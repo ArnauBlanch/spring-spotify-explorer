@@ -17,7 +17,7 @@ public class SqlPlayListRepositoryTest {
     public void addTheTrackToThePlayList() {
         DataSource dataSource = new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("classpath:jdbc/schema.sql").build();
+                .addScript("classpath:jdbc/schema.sql_").build();
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         PlayListRepository playListRepository = new SqlPlayListRepository(jdbcTemplate);
 
