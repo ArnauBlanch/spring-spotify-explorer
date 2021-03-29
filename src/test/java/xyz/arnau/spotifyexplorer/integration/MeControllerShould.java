@@ -83,17 +83,17 @@ public class MeControllerShould {
                 .willReturn(okJson("{\"token_type\": \"Bearer\",\"access_token\":\"{{randomValue length=20 type='ALPHANUMERIC'}}\"}")));
 
         mockOAuth2Provider.stubFor(get(urlPathEqualTo("/userinfo"))
-                .willReturn(okJson("{\"sub\":\"my-id\",\"email\":\"bwatkins@test.com\"}")));
+                .willReturn(okJson("{\"sub\":\"my-id\",\"email\":\"test@test.com\"}")));
 
         mockOAuth2Provider.stubFor(get(urlPathEqualTo("/v1/me"))
-            .willReturn(okJson("{\"sub\":\"my-id\",\"email\":\"bwatkins@test.com\"}")));
+            .willReturn(okJson("{\"sub\":\"my-id\",\"email\":\"test@test.com\"}")));
     }
 
     @Test
     public void logs_in_via_wiremock_sso_and_retrieve_me_information() throws Exception {
         webDriver.get("http://localhost:" + port + "/oauth2/authorization/wiremock");
 
-        webDriver.findElement(By.name("username")).sendKeys("bwatkins@test.com");
+        webDriver.findElement(By.name("username")).sendKeys("test@test.com");
         webDriver.findElement(By.name("password")).sendKeys("pass123");
         webDriver.findElement(By.id("submit")).click();
 
@@ -113,7 +113,7 @@ public class MeControllerShould {
     private static OAuth2AuthenticationToken buildPrincipal() {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("sub", "my-id");
-        attributes.put("email", "bwatkins@test.org");
+        attributes.put("email", "test@test.org");
 
         List<GrantedAuthority> authorities = Collections.singletonList(
             new OAuth2UserAuthority("ROLE_USER", attributes));
