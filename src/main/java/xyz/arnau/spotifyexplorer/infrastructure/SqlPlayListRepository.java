@@ -13,6 +13,10 @@ public class SqlPlayListRepository implements PlayListRepository {
 
     @Override
     public void add(Track track) {
+        String sql = "INSERT INTO PlayList (id, name, singer) "
+                + "VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, new Object[] {
+                track.getId(), track.getName(), track.getSinger() });
 
     }
 }

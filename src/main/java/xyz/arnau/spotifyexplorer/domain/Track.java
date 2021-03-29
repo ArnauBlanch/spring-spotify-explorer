@@ -21,6 +21,18 @@ public class Track {
         return Objects.equals(id, track.id) && Objects.equals(name, track.name) && Objects.equals(singer, track.singer);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSinger() {
+        return singer;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, name, singer);
