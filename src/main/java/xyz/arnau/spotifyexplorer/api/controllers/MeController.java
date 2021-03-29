@@ -16,7 +16,7 @@ public class MeController {
     }
 
     @GetMapping("/me")
-    public SpotifyUser getCurrentUserProfile(@RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient) {
+    public SpotifyUser getCurrentUserProfile(@RegisteredOAuth2AuthorizedClient("wiremock") OAuth2AuthorizedClient authorizedClient) {
         return this.spotifyService.getCurrentUserProfile(authorizedClient.getAccessToken().getTokenValue());
     }
 }

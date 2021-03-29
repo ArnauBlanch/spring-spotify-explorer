@@ -1,26 +1,36 @@
 spring:
   security:
+    basic:
+      enabled: false
     oauth2:
       client:
         registration:
+          mocklab:
+            provider: mocklab
+            authorization-grant-type: authorization_code
+            scope: email
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            clientId: mocklab_oauth2
+            clientSecret: whatever
           wiremock:
             provider: wiremock
             authorization-grant-type: authorization_code
             scope: email
-            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-            clientId: wm
-            clientSecret: whatever
-        provider:
-#          mocklab:
-#            authorization-uri: https://oauth.mocklab.io/oauth/authorize
-#            token-uri: https://oauth.mocklab.io/oauth/token
-#            user-info-uri: https://oauth.mocklab.io/userinfo
-#            user-name-attribute: sub
-#            jwk-set-uri: https://oauth.mocklab.io/.well-known/jwks.json
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/wiremock"
+            client-id: wm
+            client-secret: whatever
 
+        provider:
           wiremock:
             authorization-uri: http://localhost:8077/oauth/authorize
             token-uri: http://localhost:8077/oauth/token
-            user-info-uri: http://localhost:8077/me
+            user-info-uri: http://localhost:8077/userinfo
             user-name-attribute: sub
-
+          mocklab:
+            authorization-uri: https://oauth.mocklab.io/oauth/authorize
+            token-uri: https://oauth.mocklab.io/oauth/token
+            user-info-uri: https://oauth.mocklab.io/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: https://oauth.mocklab.io/.well-known/jwks.json
+spotify:
+  api-url: http://localhost:8077
