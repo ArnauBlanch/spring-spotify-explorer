@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,5 +39,17 @@ public class TrackControllerTest {
                 .post("/track")
         .then()
                 .statusCode(HttpStatus.CREATED.value());
+    }
+
+    @Test
+    @Ignore
+    public void notAddTrackToAppPlaylistIfTrackIsNotFound() throws JSONException {
+        given()
+                .contentType(ContentType.JSON)
+                .body(new JSONObject().put("name", "unexisting track").toString())
+        .when()
+                .post("/track")
+        .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 }
