@@ -1,9 +1,7 @@
 package xyz.arnau.spotifyexplorer.integration;
 
 import org.junit.Test;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;

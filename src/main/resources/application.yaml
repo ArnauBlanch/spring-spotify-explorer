@@ -1,4 +1,4 @@
-pring:
+spring:
   profiles:
     active: dev
 
@@ -9,3 +9,9 @@ server:
       force: true
 spotify:
   api-url: https://api.spotify.com
+
+jdbc:
+  driver-class-name: org.h2.Driver
+  url: jdbc:h2:mem:test
+  user: someuser
+  pass: somepassword
