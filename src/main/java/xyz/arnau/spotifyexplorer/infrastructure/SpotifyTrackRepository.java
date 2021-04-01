@@ -2,6 +2,7 @@ package xyz.arnau.spotifyexplorer.infrastructure;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import xyz.arnau.spotifyexplorer.domain.Track;
@@ -19,15 +20,14 @@ public class SpotifyTrackRepository implements TrackRepository {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl("http://localhost:8077/v1/search")
                 .queryParam("type", "track")
                 .queryParam("q", "name:" + name);
-        ResponseEntity<SpotifySearchTrackResponse> response =
-                restTemplate.getForEntity(uriBuilder.build().toUriString(), SpotifySearchTrackResponse.class);
+        try {
+            ResponseEntity<SpotifySearchTrackResponse> response =
+                    restTemplate.getForEntity(uriBuilder.build().toUriString(), SpotifySearchTrackResponse.class);
+            SpotifyTrackResponse trackResponse = response.getBody().getTracks().getItems().get(0);
 
-        if (!response.getStatusCode().is2xxSuccessful()) {
+            return new Track(trackResponse.getId(), trackResponse.getName(), trackResponse.getArtists().get(0).getName());
+        } catch (RestClientException e) {
             return null;
         }
-
-        SpotifyTrackResponse trackResponse = response.getBody().getTracks().getItems().get(0);
-
-        return new Track(trackResponse.getId(), trackResponse.getName(), trackResponse.getArtists().get(0).getName());
     }
 }

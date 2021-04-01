@@ -61,7 +61,8 @@ public class TrackControllerTest {
                         "}")));
 
         mockSpotifyRule.stubFor(get(urlPathMatching("/v1/search"))
-
+                .withQueryParam("type", matching("track"))
+                .withQueryParam("q", matching("name:unexisting track"))
                 .willReturn(notFound()));
     }
 
