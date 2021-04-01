@@ -1,5 +1,7 @@
 package xyz.arnau.spotifyexplorer.infrastructure;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class SpotifyPagingResponse {
@@ -7,5 +9,6 @@ public class SpotifyPagingResponse {
         return items;
     }
 
+    @JsonProperty
     private List<SpotifyTrackResponse> items;
 }

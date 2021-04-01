@@ -39,6 +39,8 @@ public class TrackControllerTest {
         RestAssured.baseURI = "http://localhost";
 
         mockSpotifyRule.stubFor(get(urlPathMatching("/v1/search"))
+                .withQueryParam("type", matching("track"))
+                .withQueryParam("q", matching("name:test name"))
                 .willReturn(okJson("{\n" +
                         "    \"tracks\": {\n" +
                         "        \"items\": [\n" +
@@ -57,6 +59,10 @@ public class TrackControllerTest {
                         "        \"total\": 1\n" +
                         "    }\n" +
                         "}")));
+
+        mockSpotifyRule.stubFor(get(urlPathMatching("/v1/search"))
+
+                .willReturn(notFound()));
     }
 
     @Test
@@ -71,7 +77,6 @@ public class TrackControllerTest {
     }
 
     @Test
-    @Ignore
     public void notAddTrackToAppPlaylistIfTrackIsNotFound() throws JSONException {
         given()
                 .contentType(ContentType.JSON)

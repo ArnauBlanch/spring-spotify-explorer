@@ -18,9 +18,9 @@ public class TrackController {
     }
 
     @PostMapping("/track")
-    public ResponseEntity<?> saveTrack(@RequestBody String name) {
+    public ResponseEntity<?> saveTrack(@RequestBody SaveTrackRequest request) {
         try {
-            saveTrack.execute(name);
+            saveTrack.execute(request.getName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (TrackNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
