@@ -11,38 +11,22 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.sql.DataSource;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@JdbcTest
-@Sql({"schema.sql"})
 public class TrackControllerTest {
     @LocalServerPort
     private Integer port;
-
-    @Autowired
-    private DataSource dataSource;
-
 
     @Rule
     public WireMockRule mockSpotifyRule = new WireMockRule(wireMockConfig()
@@ -73,11 +57,6 @@ public class TrackControllerTest {
                         "        \"total\": 1\n" +
                         "    }\n" +
                         "}")));
-
-        ClassPathResource file = new ClassPathResource("schema.sql");
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(file);
-        resourceDatabasePopulator.execute(dataSource);
     }
 
     @Test
