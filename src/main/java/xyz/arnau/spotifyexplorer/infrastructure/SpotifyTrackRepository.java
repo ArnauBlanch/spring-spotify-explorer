@@ -1,7 +1,10 @@
 package xyz.arnau.spotifyexplorer.infrastructure;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -10,9 +13,11 @@ import xyz.arnau.spotifyexplorer.domain.TrackRepository;
 
 public class SpotifyTrackRepository implements TrackRepository {
     private RestTemplate restTemplate;
+    private SpotifyAuthService spotifyAuthService;
 
-    public SpotifyTrackRepository(RestTemplate restTemplate) {
+    public SpotifyTrackRepository(RestTemplate restTemplate, SpotifyAuthService spotifyAuthService) {
         this.restTemplate = restTemplate;
+        this.spotifyAuthService = spotifyAuthService;
     }
 
     @Override
@@ -21,8 +26,10 @@ public class SpotifyTrackRepository implements TrackRepository {
                 .queryParam("type", "track")
                 .queryParam("q", "name:" + name);
         try {
+            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+            headers.add("Authorization", spotifyAuthService.getToken());
             ResponseEntity<SpotifySearchTrackResponse> response =
-                    restTemplate.getForEntity(uriBuilder.build().toUriString(), SpotifySearchTrackResponse.class);
+                    restTemplate.exchange(uriBuilder.build().toUriString(), HttpMethod.GET, new HttpEntity<Object>(headers), SpotifySearchTrackResponse.class);
             SpotifyTrackResponse trackResponse = response.getBody().getTracks().getItems().get(0);
 
             return new Track(trackResponse.getId(), trackResponse.getName(), trackResponse.getArtists().get(0).getName());

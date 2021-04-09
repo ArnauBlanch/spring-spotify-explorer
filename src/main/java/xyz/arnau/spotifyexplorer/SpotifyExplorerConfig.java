@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import xyz.arnau.spotifyexplorer.application.SaveTrack;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.SpotifyAuthService;
 import xyz.arnau.spotifyexplorer.infrastructure.SpotifyTrackRepository;
 import xyz.arnau.spotifyexplorer.infrastructure.SqlPlayListRepository;
 
@@ -27,8 +28,13 @@ public class SpotifyExplorerConfig {
     }
 
     @Bean
-    public TrackRepository trackRepository(RestTemplate restTemplate) {
-        return new SpotifyTrackRepository(restTemplate);
+    public TrackRepository trackRepository(RestTemplate restTemplate, SpotifyAuthService spotifyAuthService) {
+        return new SpotifyTrackRepository(restTemplate, spotifyAuthService);
+    }
+
+    @Bean
+    public SpotifyAuthService spotifyAuthService() {
+        return new SpotifyAuthService();
     }
 
     @Bean
