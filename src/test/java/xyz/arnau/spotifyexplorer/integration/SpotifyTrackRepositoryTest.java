@@ -11,7 +11,9 @@ import xyz.arnau.spotifyexplorer.domain.TrackRepository;
 import xyz.arnau.spotifyexplorer.infrastructure.SpotifyTrackRepository;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.matching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -28,6 +30,7 @@ public class SpotifyTrackRepositoryTest {
         trackRepository = new SpotifyTrackRepository(new RestTemplate());
 
         mockSpotifyRule.stubFor(get(urlPathMatching("/v1/search"))
+                .withHeader("Authorization", matching("Bearer TEST_TOKEN"))
                 .willReturn(okJson("{\n" +
                         "    \"tracks\": {\n" +
                         "        \"items\": [\n" +
@@ -50,6 +53,7 @@ public class SpotifyTrackRepositoryTest {
 
     @Test
     public void findsTrackByName() {
+        when(spotifyAuthService.getToken()).returns("TEST_TOKEN");
 
         String trackName = "testName";
         Track track = trackRepository.findByName(trackName);
