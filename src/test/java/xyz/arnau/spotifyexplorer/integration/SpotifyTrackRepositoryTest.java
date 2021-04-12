@@ -24,18 +24,30 @@ public class SpotifyTrackRepositoryTest {
     private TrackRepository trackRepository;
 
     @Rule
-    public WireMockRule mockSpotifyRule = new WireMockRule(wireMockConfig()
+    public WireMockRule mockSpotifyApiRule = new WireMockRule(wireMockConfig()
             .port(8077)
             .extensions(new ResponseTemplateTransformer(true)));
 
+    @Rule
+    public WireMockRule mockSpotifyAccountsRule = new WireMockRule(wireMockConfig()
+            .port(8078)
+            .extensions(new ResponseTemplateTransformer(true)));
     @Before
     public void setUp() throws Exception {
         SpotifyApiConfig apiConfig = new SpotifyApiConfig();
         apiConfig.setApiUrl("http://localhost:8077");
+        apiConfig.setAccountsUrl("http://localhost:8078");
 
-        trackRepository = new SpotifyTrackRepository(new RestTemplate(), new SpotifyAuthService(), apiConfig);
+        trackRepository = new SpotifyTrackRepository(new RestTemplate(), new SpotifyAuthService(new RestTemplate(), apiConfig), apiConfig);
 
-        mockSpotifyRule.stubFor(get(urlPathMatching("/v1/search"))
+        mockSpotifyAccountsRule.stubFor(get(urlPathMatching("/api/token"))
+                .willReturn(okJson("{\n" +
+                        "    \"access_token\": \"TEST_TOKEN\",\n" +
+                        "    \"token_type\": \"Bearer\",\n" +
+                        "    \"expires_in\": 3600\n" +
+                        "}")));
+
+        mockSpotifyApiRule.stubFor(get(urlPathMatching("/v1/search"))
                 .withHeader("Authorization", matching("Bearer TEST_TOKEN"))
                 .willReturn(okJson("{\n" +
                         "    \"tracks\": {\n" +

@@ -1,2 +1,3 @@
 spotify:
   api-url: http://localhost:8077
+  accounts-url: http://localhost:8078

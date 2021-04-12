@@ -34,8 +34,8 @@ public class SpotifyExplorerConfig {
     }
 
     @Bean
-    public SpotifyAuthService spotifyAuthService() {
-        return new SpotifyAuthService();
+    public SpotifyAuthService spotifyAuthService(RestTemplate restTemplate, SpotifyApiConfig spotifyApiConfig) {
+        return new SpotifyAuthService(restTemplate, spotifyApiConfig);
     }
 
     @Bean

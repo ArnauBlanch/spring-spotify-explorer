@@ -7,6 +7,15 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spotify")
 public class SpotifyApiConfig {
     private String apiUrl;
+    private String accountsUrl;
+
+    public String getAccountsUrl() {
+        return accountsUrl;
+    }
+
+    public void setAccountsUrl(String accountsUrl) {
+        this.accountsUrl = accountsUrl;
+    }
 
     public String getApiUrl() {
         return apiUrl;
