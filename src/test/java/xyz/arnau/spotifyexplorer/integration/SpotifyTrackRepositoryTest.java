@@ -5,9 +5,12 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 import xyz.arnau.spotifyexplorer.domain.Track;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.SpotifyApiConfig;
 import xyz.arnau.spotifyexplorer.infrastructure.SpotifyAuthService;
 import xyz.arnau.spotifyexplorer.infrastructure.SpotifyTrackRepository;
 
@@ -27,7 +30,10 @@ public class SpotifyTrackRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        trackRepository = new SpotifyTrackRepository(new RestTemplate(), new SpotifyAuthService());
+        SpotifyApiConfig apiConfig = new SpotifyApiConfig();
+        apiConfig.setApiUrl("http://localhost:8077");
+
+        trackRepository = new SpotifyTrackRepository(new RestTemplate(), new SpotifyAuthService(), apiConfig);
 
         mockSpotifyRule.stubFor(get(urlPathMatching("/v1/search"))
                 .withHeader("Authorization", matching("Bearer TEST_TOKEN"))

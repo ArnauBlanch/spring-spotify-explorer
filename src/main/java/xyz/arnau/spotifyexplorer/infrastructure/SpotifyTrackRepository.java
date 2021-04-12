@@ -1,5 +1,6 @@
 package xyz.arnau.spotifyexplorer.infrastructure;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -10,19 +11,23 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import xyz.arnau.spotifyexplorer.domain.Track;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.model.SpotifySearchTrackResponse;
+import xyz.arnau.spotifyexplorer.infrastructure.model.SpotifyTrackResponse;
 
 public class SpotifyTrackRepository implements TrackRepository {
     private RestTemplate restTemplate;
     private SpotifyAuthService spotifyAuthService;
+    private SpotifyApiConfig spotifyApiConfig;
 
-    public SpotifyTrackRepository(RestTemplate restTemplate, SpotifyAuthService spotifyAuthService) {
+    public SpotifyTrackRepository(RestTemplate restTemplate, SpotifyAuthService spotifyAuthService, SpotifyApiConfig spotifyApiConfig) {
         this.restTemplate = restTemplate;
         this.spotifyAuthService = spotifyAuthService;
+        this.spotifyApiConfig = spotifyApiConfig;
     }
 
     @Override
     public Track findByName(String name) {
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl("http://localhost:8077/v1/search")
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(spotifyApiConfig.getApiUrl() + "/v1/search")
                 .queryParam("type", "track")
                 .queryParam("q", "name:" + name);
         try {
