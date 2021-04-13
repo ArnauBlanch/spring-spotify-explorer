@@ -1,6 +1,5 @@
 package xyz.arnau.spotifyexplorer.application;
 
-import org.springframework.stereotype.Service;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;
 import xyz.arnau.spotifyexplorer.domain.Track;
 import xyz.arnau.spotifyexplorer.domain.TrackNotFoundException;

@@ -1,10 +1,10 @@
-package xyz.arnau.spotifyexplorer.infrastructure;
+package xyz.arnau.spotifyexplorer.infrastructure.repositories;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import xyz.arnau.spotifyexplorer.infrastructure.model.SpotifyTokenResponse;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.model.SpotifyTokenResponse;
 
 public class SpotifyAuthService {
     private RestTemplate restTemplate;

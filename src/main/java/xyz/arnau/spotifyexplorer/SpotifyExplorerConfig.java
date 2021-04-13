@@ -10,10 +10,10 @@ import org.springframework.web.client.RestTemplate;
 import xyz.arnau.spotifyexplorer.application.SaveTrack;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
-import xyz.arnau.spotifyexplorer.infrastructure.SpotifyApiConfig;
-import xyz.arnau.spotifyexplorer.infrastructure.SpotifyAuthService;
-import xyz.arnau.spotifyexplorer.infrastructure.SpotifyTrackRepository;
-import xyz.arnau.spotifyexplorer.infrastructure.SqlPlayListRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyApiConfig;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyAuthService;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyTrackRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SqlPlayListRepository;
 
 import javax.sql.DataSource;
 import java.util.Objects;

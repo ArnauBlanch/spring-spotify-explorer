@@ -1,6 +1,5 @@
-package xyz.arnau.spotifyexplorer.infrastructure;
+package xyz.arnau.spotifyexplorer.infrastructure.repositories;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +10,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import xyz.arnau.spotifyexplorer.domain.Track;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
-import xyz.arnau.spotifyexplorer.infrastructure.model.SpotifySearchTrackResponse;
-import xyz.arnau.spotifyexplorer.infrastructure.model.SpotifyTrackResponse;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.model.SpotifySearchTrackResponse;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.model.SpotifyTrackResponse;
 
 public class SpotifyTrackRepository implements TrackRepository {
     private RestTemplate restTemplate;

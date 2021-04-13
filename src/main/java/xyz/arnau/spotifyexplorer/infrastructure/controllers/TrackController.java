@@ -1,11 +1,11 @@
-package xyz.arnau.spotifyexplorer.api.controllers;
+package xyz.arnau.spotifyexplorer.infrastructure.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.arnau.spotifyexplorer.api.controllers.model.SaveTrackRequest;
+import xyz.arnau.spotifyexplorer.infrastructure.controllers.model.SaveTrackRequest;
 import xyz.arnau.spotifyexplorer.application.SaveTrack;
 import xyz.arnau.spotifyexplorer.domain.TrackNotFoundException;
 

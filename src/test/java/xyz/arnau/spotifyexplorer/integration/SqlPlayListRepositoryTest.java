@@ -6,7 +6,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;
 import xyz.arnau.spotifyexplorer.domain.Track;
-import xyz.arnau.spotifyexplorer.infrastructure.SqlPlayListRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SqlPlayListRepository;
 
 import javax.sql.DataSource;
 

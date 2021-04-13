@@ -1,4 +1,4 @@
-package xyz.arnau.spotifyexplorer.infrastructure;
+package xyz.arnau.spotifyexplorer.infrastructure.repositories;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

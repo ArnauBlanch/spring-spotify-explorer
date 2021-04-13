@@ -1,4 +1,4 @@
-package xyz.arnau.spotifyexplorer.api.controllers.model;
+package xyz.arnau.spotifyexplorer.infrastructure.controllers.model;
 
 public class SaveTrackRequest {
     private String name;

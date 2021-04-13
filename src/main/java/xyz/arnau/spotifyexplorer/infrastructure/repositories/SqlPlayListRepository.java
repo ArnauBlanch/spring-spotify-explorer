@@ -1,4 +1,4 @@
-package xyz.arnau.spotifyexplorer.infrastructure;
+package xyz.arnau.spotifyexplorer.infrastructure.repositories;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;

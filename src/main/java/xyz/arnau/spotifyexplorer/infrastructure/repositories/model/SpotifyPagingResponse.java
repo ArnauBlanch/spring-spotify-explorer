@@ -1,4 +1,4 @@
-package xyz.arnau.spotifyexplorer.infrastructure.model;
+package xyz.arnau.spotifyexplorer.infrastructure.repositories.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

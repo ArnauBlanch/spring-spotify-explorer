@@ -5,20 +5,18 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 import xyz.arnau.spotifyexplorer.domain.Track;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
-import xyz.arnau.spotifyexplorer.infrastructure.SpotifyApiConfig;
-import xyz.arnau.spotifyexplorer.infrastructure.SpotifyAuthService;
-import xyz.arnau.spotifyexplorer.infrastructure.SpotifyTrackRepository;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyApiConfig;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyAuthService;
+import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyTrackRepository;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.client.WireMock.matching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class SpotifyTrackRepositoryTest {
     private TrackRepository trackRepository;
