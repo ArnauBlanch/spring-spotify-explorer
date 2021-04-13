@@ -2,6 +2,7 @@ package xyz.arnau.spotifyexplorer.integration;
 
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.json.JSONException;
@@ -10,15 +11,21 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import xyz.arnau.spotifyexplorer.domain.Track;
+import xyz.arnau.spotifyexplorer.domain.TrackList;
+
+import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItems;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -73,7 +80,7 @@ public class TrackControllerTest {
                 .contentType(ContentType.JSON)
                 .body(new JSONObject().put("name", "test name").toString())
         .when()
-                .post("/track")
+                .post("/tracks/create")
         .then()
                 .statusCode(HttpStatus.CREATED.value());
     }
@@ -84,8 +91,21 @@ public class TrackControllerTest {
                 .contentType(ContentType.JSON)
                 .body(new JSONObject().put("name", "unexisting track").toString())
         .when()
-                .post("/track")
+                .post("/tracks/create")
         .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void searchTrackFromPlaylist() {
+        TrackList expectedTracks = new TrackList(List.of(new Track("testId", "testName", "testSinger")));
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("keyword", "food")
+        .when()
+                .get("/tracks/search")
+        .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("tracks", hasItems(expectedTracks));
     }
 }
