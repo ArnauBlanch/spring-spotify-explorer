@@ -5,18 +5,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import xyz.arnau.spotifyexplorer.application.SaveTrack;
-import xyz.arnau.spotifyexplorer.domain.PlayListRepository;
-import xyz.arnau.spotifyexplorer.domain.Track;
-import xyz.arnau.spotifyexplorer.domain.TrackNotFoundException;
-import xyz.arnau.spotifyexplorer.domain.TrackRepository;
+import xyz.arnau.spotifyexplorer.application.TrackService;
+import xyz.arnau.spotifyexplorer.domain.*;
+
+import java.util.List;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SaveTrackTest {
-    private SaveTrack saveTrack;
+public class TrackServiceTest {
+    private TrackService trackService;
     @Mock
     private PlayListRepository playlistRepository;
     @Mock
@@ -24,7 +23,7 @@ public class SaveTrackTest {
 
     @Before
     public void setUp() {
-        saveTrack = new SaveTrack(trackRepository, playlistRepository);
+        trackService = new TrackService(trackRepository, playlistRepository);
     }
 
     @Test
@@ -33,7 +32,7 @@ public class SaveTrackTest {
         Track track = new Track("an-id", "some-name", "some-singer");
         when(trackRepository.findByName("some-name")).thenReturn(track);
 
-        saveTrack.execute("some-name");
+        trackService.save("some-name");
 
         verify(playlistRepository).add(track);
     }
@@ -43,10 +42,23 @@ public class SaveTrackTest {
         when(trackRepository.findByName("unexisting-name")).thenReturn(null);
 
         try {
-            saveTrack.execute("unexisting-name");
+            trackService.save("unexisting-name");
             fail();
         } catch (TrackNotFoundException ex) {
             verify(playlistRepository, never()).add(any());
         }
+    }
+
+    @Test
+    public void givenKeywordReturnsListOfTracks() {
+        String keyword = "someKeyword";
+        Track track = new Track("an-id", "some-name", "some-singer");
+        TrackList expectedTracklist = new TrackList(List.of(track));
+
+        when(playlistRepository.search(keyword)).thenReturn(expectedTracklist);
+        TrackList trackList = trackService.search(keyword);
+
+        verify(playlistRepository, times(1)).search(keyword);
+        assert(trackList).equals(expectedTracklist);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.client.RestTemplate;
-import xyz.arnau.spotifyexplorer.application.SaveTrack;
+import xyz.arnau.spotifyexplorer.application.TrackService;
 import xyz.arnau.spotifyexplorer.domain.PlayListRepository;
 import xyz.arnau.spotifyexplorer.domain.TrackRepository;
 import xyz.arnau.spotifyexplorer.infrastructure.repositories.SpotifyApiConfig;
@@ -24,8 +24,8 @@ public class SpotifyExplorerConfig {
     Environment env;
 
     @Bean
-    public SaveTrack saveTrack(TrackRepository trackRepository, PlayListRepository playListRepository) {
-        return new SaveTrack(trackRepository, playListRepository);
+    public TrackService saveTrack(TrackRepository trackRepository, PlayListRepository playListRepository) {
+        return new TrackService(trackRepository, playListRepository);
     }
 
     @Bean

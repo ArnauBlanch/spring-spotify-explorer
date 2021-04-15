@@ -8,4 +8,8 @@ public class TrackList {
     public TrackList(List<Track> tracks) {
         this.tracks = tracks;
     }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
 }
