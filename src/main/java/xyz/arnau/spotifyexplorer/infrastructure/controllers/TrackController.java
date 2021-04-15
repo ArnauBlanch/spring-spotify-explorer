@@ -1,8 +1,10 @@
 package xyz.arnau.spotifyexplorer.infrastructure.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xyz.arnau.spotifyexplorer.domain.TrackList;
 import xyz.arnau.spotifyexplorer.infrastructure.controllers.model.SaveTrackRequest;
 import xyz.arnau.spotifyexplorer.application.TrackService;
 import xyz.arnau.spotifyexplorer.domain.TrackNotFoundException;
@@ -30,8 +32,8 @@ public class TrackController {
     @GetMapping("/search")
     public ResponseEntity<?> searchTrack(@RequestParam String keyword) {
         try {
-            //saveTrack.execute(request.getName());
-            return new ResponseEntity<>(HttpStatus.OK);
+            TrackList trackList = trackService.search(keyword);
+            return ResponseEntity.ok(trackList);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -13,14 +13,14 @@ public class Track {
         this.singer = singer;
     }
 
-    @Override
-    public String toString() {
-        return "Track{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", singer='" + singer + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "id=" + id +
+//                ", name=" + name +
+//                ", singer=" + singer +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,25 +1,27 @@
 package xyz.arnau.spotifyexplorer.integration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import xyz.arnau.spotifyexplorer.domain.Track;
 import xyz.arnau.spotifyexplorer.domain.TrackList;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -35,6 +37,9 @@ import static org.hamcrest.Matchers.hasItems;
 public class TrackControllerTest {
     @LocalServerPort
     private Integer port;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Rule
     public WireMockRule mockSpotifyRule = new WireMockRule(wireMockConfig()
@@ -97,15 +102,22 @@ public class TrackControllerTest {
     }
 
     @Test
-    public void searchTrackFromPlaylist() {
-        TrackList expectedTracks = new TrackList(List.of(new Track("testId", "testName", "testSinger")));
+    public void searchTrackFromPlaylist() throws JsonProcessingException, JSONException {
+        Track track = new Track("testId", "testName", "testSinger");
+        TrackList expectedTracks = new TrackList(List.of(track));
+
+        String sql = "INSERT INTO PlayList (id, name, singer) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, track.getId(), track.getName(), track.getSinger());
+
+        ObjectMapper mapper = new ObjectMapper();
+
         given()
                 .contentType(ContentType.JSON)
-                .queryParam("keyword", "food")
+                .queryParam("keyword", "testName")
         .when()
                 .get("/tracks/search")
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("tracks", hasItems(expectedTracks));
+                .body("tracks[0]", Matchers.equalTo(track));
     }
 }
